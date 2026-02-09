@@ -3,7 +3,7 @@ package br.com.FelipeBarboz.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class People implements Serializable {
+public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,8 +51,8 @@ public class People implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof People people)) return false;
-        return Objects.equals(getId(), people.getId()) && Objects.equals(getFirstName(), people.getFirstName()) && Objects.equals(getLastName(), people.getLastName()) && Objects.equals(getAddress(), people.getAddress()) && Objects.equals(getGender(), people.getGender());
+        if (!(o instanceof Person person)) return false;
+        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
     }
 
     @Override
@@ -64,7 +64,7 @@ public class People implements Serializable {
         this.gender = gender;
     }
 
-    public People() {
+    public Person() {
 
 
     }
