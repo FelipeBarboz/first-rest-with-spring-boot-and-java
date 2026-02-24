@@ -1,6 +1,9 @@
 package br.com.FelipeBarboz.services;
 
+import br.com.FelipeBarboz.data.dto.PersonDto;
 import br.com.FelipeBarboz.exception.ResourceNotFoundException;
+import static br.com.FelipeBarboz.mapper.ObjectMapper.parseListObjects;
+import static br.com.FelipeBarboz.mapper.ObjectMapper.parseObject;
 import br.com.FelipeBarboz.model.Person;
 import br.com.FelipeBarboz.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +22,29 @@ public class PersonService {
     @Autowired
     PersonRepository repository;
 
-    public List<Person> findAll() {
+    public List<PersonDto> findAll() {
 
         logger.info("Finding all people!");
 
-        return repository.findAll();
+        return parseListObjects(repository.findAll(), PersonDto.class);
     }
 
-    public Person findById(Long id) {
+    public PersonDto findById(Long id) {
         logger.info("Finding one person!");
 
-        return repository.findById(id)
+        var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        return parseObject(entity, PersonDto.class);
     }
 
-    public Person create(Person person) {
+    public PersonDto create(PersonDto person) {
         logger.info("Creating one person!");
+        var entity = parseObject(person, Person.class);
 
-        return repository.save(person);
+        return parseObject(repository.save(entity), PersonDto.class);
     }
 
-    public Person update(Person person) {
+    public PersonDto update(PersonDto person) {
 
         logger.info("Updating one person!");
 
@@ -50,7 +55,7 @@ public class PersonService {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return repository.save(person);
+        return parseObject(repository.save(entity), PersonDto.class);
     }
 
     public void delete(Long id) {

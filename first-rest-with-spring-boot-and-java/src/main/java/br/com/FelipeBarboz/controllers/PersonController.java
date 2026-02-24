@@ -1,13 +1,12 @@
 package br.com.FelipeBarboz.controllers;
 
-import br.com.FelipeBarboz.model.Person;
+import br.com.FelipeBarboz.data.dto.PersonDto;
 import br.com.FelipeBarboz.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @RestController
@@ -16,23 +15,25 @@ public class PersonController {
 
     @Autowired
     private PersonService service;
+    // private PersonServices service = new PersonServices();
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findAll(){
+    public List<PersonDto> findAll() {
         return service.findAll();
     }
 
     @GetMapping(value = "/{id}",
-        produces = MediaType.APPLICATION_JSON_VALUE
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person findById(@PathVariable("id") Long id){
+    public PersonDto findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person create(@RequestBody Person person){
+    public PersonDto create(@RequestBody PersonDto person) {
         return service.create(person);
     }
 
@@ -40,12 +41,13 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person update(@RequestBody Person person){
+    public PersonDto update(@RequestBody PersonDto person) {
         return service.update(person);
     }
 
+
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
