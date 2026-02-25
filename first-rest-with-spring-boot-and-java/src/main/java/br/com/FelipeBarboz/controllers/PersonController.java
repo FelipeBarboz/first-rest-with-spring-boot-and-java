@@ -1,6 +1,7 @@
 package br.com.FelipeBarboz.controllers;
 
-import br.com.FelipeBarboz.data.dto.PersonDto;
+import br.com.FelipeBarboz.data.dto.v1.PersonDto;
+import br.com.FelipeBarboz.data.dto.v2.PersonDtoV2;
 import br.com.FelipeBarboz.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -36,6 +37,12 @@ public class PersonController {
     public PersonDto create(@RequestBody PersonDto person) {
         return service.create(person);
     }
+
+    @PostMapping(value = "/v2",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public PersonDtoV2 createV2(@RequestBody PersonDtoV2 person) {return service.createV2(person); }
 
     @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,

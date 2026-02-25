@@ -3,7 +3,7 @@ package br.com.FelipeBarboz.unitetests.mapper.mocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.FelipeBarboz.data.dto.PersonDto;
+import br.com.FelipeBarboz.data.dto.v1.PersonDto;
 import br.com.FelipeBarboz.model.Person;
 
 public class MockPerson {

@@ -1,9 +1,12 @@
 package br.com.FelipeBarboz.services;
 
-import br.com.FelipeBarboz.data.dto.PersonDto;
+import br.com.FelipeBarboz.data.dto.v1.PersonDto;
+import br.com.FelipeBarboz.data.dto.v2.PersonDtoV2;
 import br.com.FelipeBarboz.exception.ResourceNotFoundException;
 import static br.com.FelipeBarboz.mapper.ObjectMapper.parseListObjects;
 import static br.com.FelipeBarboz.mapper.ObjectMapper.parseObject;
+
+import br.com.FelipeBarboz.mapper.custom.PersonMapper;
 import br.com.FelipeBarboz.model.Person;
 import br.com.FelipeBarboz.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class PersonService {
 
     @Autowired
     PersonRepository repository;
+
+    @Autowired
+    PersonMapper converter;
 
     public List<PersonDto> findAll() {
 
@@ -42,6 +48,14 @@ public class PersonService {
         var entity = parseObject(person, Person.class);
 
         return parseObject(repository.save(entity), PersonDto.class);
+    }
+
+    public PersonDtoV2 createV2(PersonDtoV2 person) {
+
+        logger.info("Creating one person V2!");
+        var entity = converter.convertDtoToEntity(person);
+
+        return converter.convertEntityToDto(repository.save(entity));
     }
 
     public PersonDto update(PersonDto person) {
